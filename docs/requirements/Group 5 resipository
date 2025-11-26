@@ -1,0 +1,53 @@
+# Initialize a new Git repository
+git init
+
+# Create the required folder structure (docs/requirements and docs/design)
+mkdir -p docs/requirements docs/design
+
+# 1. [span_0](start_span)Create the Requirements Specification Document (RSD)[span_0](end_span)
+echo "## Requirements Specification Document (RSD)" > docs/requirements/RSD.md
+echo "1. System must support 10,000 concurrent users." >> docs/requirements/RSD.md
+echo "2. System must be highly scalable." >> docs/requirements/RSD.md
+echo "3. Data storage must be highly durable." >> docs/requirements/RSD.md
+
+# Add all files and commit the initial RSD
+git add .
+git commit -m "docs: Initial Requirements Specification Document (RSD)"
+# 2. Create the initial System Design Document (SDD)
+echo "## System Design Document (SDD) - Version 1" > docs/design/system_design_v1.md
+echo "### Architectural Options" >> docs/design/system_design_v1.md
+echo "A. *Microservices*: High scalability, high complexity. Requires dedicated data stores for each service." >> docs/design/system_design_v1.md
+echo "B. *Monolith*: Simple to deploy, lower scalability ceiling. Uses a single relational database." >> docs/design/system_design_v1.md
+
+# Add and commit the initial SDD
+git add .
+git commit -m "feat: Initial SDD outlining Microservices and Monolith options"
+
+# 3. [span_1](start_span)Create a branch for the client's change request[span_1](end_span)
+git checkout -b client-change-request
+
+# Simulate the client's change: updating a requirement detail
+echo "4. User data must be stored in a PostgreSQL database for licensing reasons." >> docs/requirements/RSD.md
+
+# Commit the updated RSD
+git add docs/requirements/RSD.md
+[span_2](start_span)git commit -m "fix: Update RSD to include mandatory PostgreSQL requirement based on client feedback"[span_2](end_span)
+
+# 4. Switch back to the main branch
+git checkout main
+
+# Update the SDD to detail the Microservices choice (This is where the future conflict will be)
+echo "" >> docs/design/system_design_v1.md
+echo "### Chosen Architecture: Microservices" >> docs/design/system_design_v1.md
+echo "*Data Storage Detail*: Each microservice will use an independent NoSQL store for speed, except for user data which will use a standard relational database." >> docs/design/system_design_v1.md
+
+# Commit the detailed SDD
+git add docs/design/system_design_v1.md
+[span_3](start_span)git commit -m "feat: Detailed SDD focusing on Microservices architecture, noting user data relational store"[span_3](end_span)
+
+# 5. Attempt to merge the client's changes
+git merge client-change-request
+
+# Output will show a CONFLICT in docs/requirements/RSD.md
+# CONFLICT (content): Merge conflict in docs/requirements/RSD.md
+# Automatic merge failed; fix conflicts and then commit the result.
