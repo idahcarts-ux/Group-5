@@ -51,3 +51,7 @@ git merge client-change-request
 # Output will show a CONFLICT in docs/requirements/RSD.md
 # CONFLICT (content): Merge conflict in docs/requirements/RSD.md
 # Automatic merge failed; fix conflicts and then commit the result.
+
+## Client Change Request
+- The system must allow users to export reports as PDF files.
+- The authentication module should support two-factor authentication (2FA).
